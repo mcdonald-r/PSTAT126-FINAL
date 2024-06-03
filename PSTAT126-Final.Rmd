@@ -9,15 +9,25 @@ output:
 
 ### Description of Variables and Observational Unit 
 
-The **Color** variable is a color grading scale that ranges from D to H (in the data set) and rates the colorless or near colorless of a white diamond. Diamonds in the ranges of D to F are the best that contain no other color and are of the highest quality. Diamonds in the ranges of G to J are still high quality but contain slight traces of color.
+The **Color** variable is a color grading scale that ranges from D to H (in the data set) and rates the colorless or
+near colorless of a white diamond. Diamonds in the ranges of D to F are the best that contain no other color and are
+of the highest quality. Diamonds in the ranges of G to J are still high quality but contain slight traces of color.
 
-The **Clarity** variable rates the presence of internal or external blemishes, known as inclusions within the diamond. In the data set the ratings go from VVS2, VS1, VS2, SI1, SI2. VVS2 means that inclusions are very difficult to see under 10x magnification. VS means that inclusions are difficult to see under 10x magnification. VS2 means that inclusions are somewhat easier to see under 10x magnification, but still minor. SI1 means that inclusions are noticeable under 10x magnification. SI2 means that inclusions are more easily noticeable under 10x magnification.
+The **Clarity** variable rates the presence of internal or external blemishes, known as inclusions within the
+diamond. In the data set the ratings go from VVS2, VS1, VS2, SI1, SI2. VVS2 means that inclusions are very difficult
+to see under 10x magnification. VS means that inclusions are difficult to see under 10x magnification. VS2 means
+that inclusions are somewhat easier to see under 10x magnification, but still minor. SI1 means that inclusions are
+noticeable under 10x magnification. SI2 means that inclusions are more easily noticeable under 10x magnification.
 
-The **Price** variable determines the monetary value of a diamond. There are a lot of factors that go into determining the value of a diamond like cut, clarity, color, shape, and many more. 
+The **Price** variable determines the monetary value of a diamond. There are a lot of factors that go into
+determining the value of a diamond like cut, clarity, color, shape, and many more. 
 
-The **Table** of a diamond refers to the large flat face when looking down at the top of the diamond. In the data set the variable is a percentage of how big the table is compared to the total diameter of the diamond.
+The **Table** of a diamond refers to the large flat face when looking down at the top of the diamond. In the data
+set the variable is a percentage of how big the table is compared to the total diameter of the diamond.
 
-The **Depth** of a diamond is the distance from the large flat surface of the top of the diamond, known as the table, to the bottom of the diamond, known as the culet. In the data set the variable is a percentage of how deep a diamond in relation to its width. 
+The **Depth** of a diamond is the distance from the large flat surface of the top of the diamond, known as the
+table, to the bottom of the diamond, known as the culet. In the data set the variable is a percentage of how deep a
+diamond in relation to its width. 
 
 The **Observational Unit** of the data set 
 
