@@ -10,6 +10,7 @@ output:
 ``` {r, echo = F, message = F}
 library(skimr)
 library(dplyr)
+library(ggplot2)
 ```
 ## PART - 1 Data Description and Descriptive Statistics
 
@@ -38,8 +39,6 @@ diamond in relation to its width.
 The **Observational Unit** of the data set is a single diamond out of the total 54,000 diamonds that make up the data
 set. Each contain the variables stated before as well as 6 other variables that are outside the scope of this
 project.
-
-\newpage
 
 ### Summary of The Data
 
@@ -72,11 +71,34 @@ observations by far was **I1** which had a total of 6 observations. If the obser
 among the 8 categories they would each have 12.5%, however in this summary we see that many are far off from that 
 percentage and vary a lot.
 
-Moving onto the 
+Moving onto **Price**, the mean price of a diamond was \$4,249 with the minimum price and maximum price being \$362 and 
+\$18,757 respectively. When it comes to the quartiles 25% of the diamonds were under \$917, half of the diamonds were
+under \$2,657 and 75% of the diamonds were under \$5374. Looking at these results we see how the mean and median are
+around \$2,400 off from each other, meaning that there were a few numbers that were very high skewing the average. This
+is shown even more when you look at the 75% quartile and there is over a \$13,000 difference between them. 
 
-``` {r Part 1.1, echo = T, results = F}
+Looking at the **Table** variable which are percentages in the data set, it shows that the mean is 57.37% and the 
+minimum and maximum of the table of the diamond is 52% and 66%. With the median being very close to the average sitting
+at exactly 57% we know that there aren't to many far off table observations. However, looking at the difference of the 
+maximum percent and the 75% quartile there is 7% difference which is a lot, considering that the total dispersion
+from the minimum and maximum is 14% which makes the 7% difference half of the whole dispersion. 
+
+Lastly, the **Depth** which are also percentages in the data set. The summary shows that the mean is 61.87% and the 
+minimum and maximum percentages are 56.9% and 70.2% respectively. When it comes to the quartiles, 25% of the depths are
+under 56%, half of the depths are under 61.9%, and 75% of the depths are under 62.6%. Something interesting to note is that similarly to the **Table** variable, the difference between the max value and 75% quartile value was 7.6% which is
+actually more than half of the difference between the minimum and maximum value which was 13.3%. 
+
+``` {r Part 1.1, echo = F, results = T}
+table(diamonds_subset$color, diamonds_subset$clarity)
+
+ggplot(diamonds_subset, aes(x = table, y = price)) + geom_point() + labs(title = "Comparing Price($) and Table(%)", x = "Table(%)", y = "Price($)") 
+
+ggplot(diamonds_subset, aes(x = depth, y = price)) + geom_point() + labs(title = "Comparing Price($) and Depth(%)", x = "Depth(%)", y = "Price($)") 
+```
+
+``` {r Part 1.2, echo = F, results = F}
 set.seed(2)
-diamonds_subset_2 <- sample_n(dataset, 500)
+diamonds_subset_2 <- sample_n(dataset, 500) 
 
 table(diamonds_subset_2$color)
 table(diamonds_subset_2$clarity)
@@ -85,7 +107,7 @@ summary(diamonds_subset_2$table)
 summary(diamonds_subset_2$depth)
 ```
 
-``` {r Part 1.2, echo = T, results = F}
+``` {r Part 1.3, echo = F, results = F}
 set.seed(3)
 diamonds_subset_3 <- sample_n(dataset, 500)
 
