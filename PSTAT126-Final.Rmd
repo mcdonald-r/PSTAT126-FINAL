@@ -1,10 +1,15 @@
 ---
 title: "PSTAT126-FINAL"
 output:
-  pdf_document: default
-  html_document: default
+  pdf_document: null
+  latex_engine: xelatex
+  html_document:
+    df_print: paged
 ---
-
+``` {r, echo = F, message = F}
+library(skimr)
+library(dplyr)
+```
 ## PART - 1 Data Description and Descriptive Statistics
 
 ### Description of Variables and Observational Unit 
@@ -29,7 +34,24 @@ The **Depth** of a diamond is the distance from the large flat surface of the to
 table, to the bottom of the diamond, known as the culet. In the data set the variable is a percentage of how deep a
 diamond in relation to its width. 
 
-The **Observational Unit** of the data set 
+The **Observational Unit** of the data set is a single diamond out of the total 54,000 diamonds that make up the data
+set. Each contain the variables stated before as well as 6 other variables that are outside the scope of this
+project.
+
+\newpage
+
+### Summary of The Data
+
+``` {r Part 1, echo = T, results = T}
+dataset <- read.csv("/users/robeh/desktop/DiamondsPrices2022.csv")
+set.seed(1)
+diamonds_subset <- sample_n(dataset, 500)
+
+str(diamonds_subset)
+summary(diamonds_subset)
+
+table(diamonds_subset$color, diamonds_subset$clarity)
+```
 
 
 
