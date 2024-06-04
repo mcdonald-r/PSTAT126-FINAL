@@ -6,6 +6,7 @@ output:
   html_document:
     df_print: paged
 ---
+
 ``` {r, echo = F, message = F}
 library(skimr)
 library(dplyr)
@@ -42,19 +43,58 @@ project.
 
 ### Summary of The Data
 
-``` {r Part 1, echo = T, results = T}
+``` {r Part 1.0, echo = T, results = T}
 dataset <- read.csv("/users/robeh/desktop/DiamondsPrices2022.csv")
 set.seed(1)
 diamonds_subset <- sample_n(dataset, 500)
 
-str(diamonds_subset)
-summary(diamonds_subset)
+table(diamonds_subset$color)
+prop.table(table(diamonds_subset$color))
+table(diamonds_subset$clarity)
+prop.table(table(diamonds_subset$clarity))
 
-table(diamonds_subset$color, diamonds_subset$clarity)
+summary(diamonds_subset$price)
+summary(diamonds_subset$table)
+summary(diamonds_subset$depth)
 ```
 
+The summary statistics you see come form a subset of the Diamonds data set, which we created by taking at random 500
+observations to create this subset, we can see the summaries of the 5 variables that are within the scope of the
+experiment being conducted.
 
+Looking at the variable **Color** we see that it's divided into 7 categories that represent the diamond's rating for
+color. The rating **G** has the most with 109 diamonds with that rating whereas the rating **I** has the least amount
+of diamonds at just 35. Looking at it from a percentage point of view, since there are 7 categories and if they were evenly distributed among the categories, each would have about 14.3%, which most of the categories are close to.
 
+On to the second categorical variable, **Clarity** the data shows out of the 8 categories the 2 with the most
+observations were **VS2** and **SI1** which respectively had 121 and 120 of the observations. The category with least 
+observations by far was **I1** which had a total of 6 observations. If the observations were perfectly distributed
+among the 8 categories they would each have 12.5%, however in this summary we see that many are far off from that 
+percentage and vary a lot.
+
+Moving onto the 
+
+``` {r Part 1.1, echo = T, results = F}
+set.seed(2)
+diamonds_subset_2 <- sample_n(dataset, 500)
+
+table(diamonds_subset_2$color)
+table(diamonds_subset_2$clarity)
+summary(diamonds_subset_2$price)
+summary(diamonds_subset_2$table)
+summary(diamonds_subset_2$depth)
+```
+
+``` {r Part 1.2, echo = T, results = F}
+set.seed(3)
+diamonds_subset_3 <- sample_n(dataset, 500)
+
+table(diamonds_subset_3$color)
+table(diamonds_subset_3$clarity)
+summary(diamonds_subset_3$price)
+summary(diamonds_subset_3$table)
+summary(diamonds_subset_3$depth)
+```
 
 
 
