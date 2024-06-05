@@ -88,13 +88,18 @@ minimum and maximum percentages are 56.9% and 70.2% respectively. When it comes 
 under 56%, half of the depths are under 61.9%, and 75% of the depths are under 62.6%. Something interesting to note is that similarly to the **Table** variable, the difference between the max value and 75% quartile value was 7.6% which is
 actually more than half of the difference between the minimum and maximum value which was 13.3%. 
 
-``` {r Part 1.1, echo = F, results = T}
+## Examining Relationships
+
+``` {r Part 1.1, echo = F, results = T, fig.width=6, fig.height=3}
 table(diamonds_subset$color, diamonds_subset$clarity)
 
 ggplot(diamonds_subset, aes(x = table, y = price)) + geom_point() + labs(title = "Comparing Price($) and Table(%)", x = "Table(%)", y = "Price($)") 
 
 ggplot(diamonds_subset, aes(x = depth, y = price)) + geom_point() + labs(title = "Comparing Price($) and Depth(%)", x = "Depth(%)", y = "Price($)") 
+
 ```
+
+Enter the relationship information here 
 
 ``` {r Part 1.2, echo = F, results = F}
 set.seed(2)
@@ -117,6 +122,64 @@ summary(diamonds_subset_3$price)
 summary(diamonds_subset_3$table)
 summary(diamonds_subset_3$depth)
 ```
+
+## Part 2 - Simple Linear Regression
+
+### Addressing The Hypothesis
+
+From comparing the variables that I decided to keep the scope of the experiment on, I realized that there wasn't much 
+correlation between them. Before the experiment I choose the variables to use at random, just to see what would happen.
+However, it didn't turn out to be interesting and after looking at the linear models that I made I decided to look into
+other relationships. That's when I decided it could be interesting to look at the relationships between how a diamond's
+length (in millimeters) would affect its price and for fun I wanted to test another hypothesis of how a diamond's 
+dimensions relate to each other, more specifically how does the depth (in millimeters) compare to a diamond's length
+which is also measured in millimeters. For both of these experiments my hypothesis is that the variables are both 
+positively linear related. For more context, I will describe these new variables I've added to the overall experiment.
+
+``` {r Part 2.0, echo = T, results = T}
+summary(diamonds_subset$x)
+summary(diamonds_subset$z)
+
+# table(diamonds_subset$x)
+# table(diamonds_subset$z)
+```
+
+The **x** variable measures the length of diamond which are taken in millimeters, whereas the **z** variable measures
+the depth of a variable also in millimeters(different from the Depth variable which is a percentage of the depth
+compared to a diamond's width). A summary report shows how the average diamond length is 5.79mm as its min is 0mm and
+its max is 10.74mm. When it comes to the measurement of depth, the summary statistics show that the average is 3.576mm,
+its min is 0mm and its max is 6.98mm. It's important to note that the minimum values for both these variables are 0
+which shouldn't be the case. Further looking into it there was only a count of 1 0 value in the **x** variable and a 
+count of 2 0 values in the **z** variable, so I've elected to keep them as outliers in the data set, because there are
+also some outliers in the top end of the values.
+
+
+```{r Part 2, echo = T, results = T, fig.width=6, fig.height=4}
+fit1 <- lm(price ~ x, data = diamonds_subset)
+summary(fit1)
+
+plot(diamonds_subset$x, diamonds_subset$price, xlab="Table(%)", ylab="Price($)")
+abline(fit1,col='red')
+
+par(mfrow=c(2,2))
+plot(fit1)
+```
+
+```{r Part 2.1, echo = T, results = T, fig.width=6, fig.height=4}
+fit2 <- lm(x ~ z, data = diamonds_subset)
+summary(fit2)
+
+plot(diamonds_subset$z, diamonds_subset$x, xlab="Length(mm)", ylab="Depth(mm)")
+abline(fit2,col='red')
+
+par(mfrow=c(2,2))
+plot(fit2)
+```
+
+
+
+
+
 
 
 
