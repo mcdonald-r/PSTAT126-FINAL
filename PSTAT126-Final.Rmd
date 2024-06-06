@@ -129,54 +129,72 @@ summary(diamonds_subset_3$depth)
 
 From comparing the variables that I decided to keep the scope of the experiment on, I realized that there wasn't much 
 correlation between them. Before the experiment I choose the variables to use at random, just to see what would happen.
-However, it didn't turn out to be interesting and after looking at the linear models that I made I decided to look into
-other relationships. That's when I decided it could be interesting to look at the relationships between how a diamond's
-length (in millimeters) would affect its price and for fun I wanted to test another hypothesis of how a diamond's 
-dimensions relate to each other, more specifically how does the depth (in millimeters) compare to a diamond's length
-which is also measured in millimeters. For both of these experiments my hypothesis is that the variables are both 
-positively linear related. For more context, I will describe these new variables I've added to the overall experiment.
+However, there wasn't much correlation and after looking at the linear models that I made I decided to also look into
+another relationship. That's when I decided it could be interesting to look at the relationships between how a diamond's
+length (in millimeters) would affect its price. For both of these experiments my hypothesis is that the variables are
+both positively linear related. For more context, I will describe these new variable I've added to the overall
+experiment.
 
 ``` {r Part 2.0, echo = T, results = T}
 summary(diamonds_subset$x)
-summary(diamonds_subset$z)
 
 # table(diamonds_subset$x)
-# table(diamonds_subset$z)
 ```
 
-The **x** variable measures the length of diamond which are taken in millimeters, whereas the **z** variable measures
-the depth of a variable also in millimeters(different from the Depth variable which is a percentage of the depth
-compared to a diamond's width). A summary report shows how the average diamond length is 5.79mm as its min is 0mm and
-its max is 10.74mm. When it comes to the measurement of depth, the summary statistics show that the average is 3.576mm,
-its min is 0mm and its max is 6.98mm. It's important to note that the minimum values for both these variables are 0
-which shouldn't be the case. Further looking into it there was only a count of 1 0 value in the **x** variable and a 
-count of 2 0 values in the **z** variable, so I've elected to keep them as outliers in the data set, because there are
-also some outliers in the top end of the values.
-
+The **x** variable measures the length of diamond which are taken in millimeters. A summary report shows how the average
+diamond length is 5.79mm as its min is 0mm and its max is 10.74mm. It's important to note that the minimum value for
+the variable is 0 which shouldn't be the case. Further looking into it there was only a count of one 0 value in
+the **x** variable, so I've elected to keep it as an outlier in the data set, because there are also some outliers in
+the top end of the values.
 
 ```{r Part 2, echo = T, results = T, fig.width=6, fig.height=4}
 fit1 <- lm(price ~ x, data = diamonds_subset)
 summary(fit1)
 
-plot(diamonds_subset$x, diamonds_subset$price, xlab="Table(%)", ylab="Price($)")
+plot(diamonds_subset$x, diamonds_subset$price, xlab="Length(mm)", ylab="Price($)")
 abline(fit1,col='red')
 
 par(mfrow=c(2,2))
 plot(fit1)
 ```
 
-```{r Part 2.1, echo = T, results = T, fig.width=6, fig.height=4}
-fit2 <- lm(x ~ z, data = diamonds_subset)
-summary(fit2)
+Looking into the residuals of the summary of the linear regression model we can see that the mean is -396.3 which is 
+relatively small in the scale of the variable. Further looking into the residuals we can see that the min and max values
+are very far apart, the min being -3792.9 and the max being 29066.4, this brings up the outliers we mentioned earlier
+and how they would've played a role when it came to these values. Overall the mean showed a pretty good prediction of
+the price. Looking at the coefficients I can immediately see the p-values of both the intercept and the slope, both are
+are extremely low numbers and the significant codes show that there is a very high significance of the relationship
+between the price and length of the diamond. Moving onto the last of the statistics, the model shows that average 
+residual error was 2289 which isn't the worst considering the lowest price value was 362 and the highest was 18757. The
+R-squared value shows a 72.31% variability of price is due to the length, which confirms the data that we've been 
+looking at. Lastly, the final confirmation of the strong correlation is that the F statistic is very high, overall the 
+summary statistics shows that there is very strong significance in the length of the diamond affecting its price. 
 
-plot(diamonds_subset$z, diamonds_subset$x, xlab="Length(mm)", ylab="Depth(mm)")
-abline(fit2,col='red')
+Moving onto the graphs the first graph really shows how well the model fits the given data. Between the length of 2mm
+and around 7mm we see where most of the data lies and hugs that red model line. As the price gets larger we can see 
+some observations stray from the model, which can do with there being less observations that are such high prices and 
+may also take into account other variables that can affect the price like how well the clarity and color is of those 
+respective diamonds. In the rest of the diagnostic plots the observations are for the most part right alone the lines
+of the model. One important thing to not from these plots is the emergence of two outliers. There is one label 130 that
+can be seen pretty apparently and another unlabeled open that show up in all 4 plots. While there are only two of these
+outliers they are still important to note and show that even within a sample size of 500 observatiosn the presence of 
+outliers is there. 
+
+```{r Part 2.1, echo = T, results = T, fig.width=6, fig.height=4}
+fit2 <- lm(price ~ table, data = diamonds_subset)
+summary(fit2)
 
 par(mfrow=c(2,2))
 plot(fit2)
+
+# Transform the data
+fit2_logy <- lm(log(price) ~ table, data = diamonds_subset)
+summary(fit2_logy)
+plot(fit2_logy)
 ```
 
-
+For the second model I decided to test I wanted to look into transforming the linear model in order to see how much 
+better the predictions would be or if it wouldn't matter in this case. 
 
 
 
