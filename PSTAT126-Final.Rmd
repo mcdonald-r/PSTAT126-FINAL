@@ -88,7 +88,7 @@ minimum and maximum percentages are 56.9% and 70.2% respectively. When it comes 
 under 56%, half of the depths are under 61.9%, and 75% of the depths are under 62.6%. Something interesting to note is that similarly to the **Table** variable, the difference between the max value and 75% quartile value was 7.6% which is
 actually more than half of the difference between the minimum and maximum value which was 13.3%. 
 
-## Examining Relationships
+### Examining Relationships
 
 ``` {r Part 1.1, echo = F, results = T, fig.width=6, fig.height=3}
 table(diamonds_subset$color, diamonds_subset$clarity)
@@ -100,6 +100,8 @@ ggplot(diamonds_subset, aes(x = depth, y = price)) + geom_point() + labs(title =
 ```
 
 Enter the relationship information here 
+
+### Interest During the Project 
 
 ``` {r Part 1.2, echo = F, results = F}
 set.seed(2)
@@ -134,6 +136,8 @@ another relationship. That's when I decided it could be interesting to look at t
 length (in millimeters) would affect its price. For both of these experiments my hypothesis is that the variables are
 both positively linear related. For more context, I will describe these new variable I've added to the overall
 experiment.
+
+### Checking Assumptions For Linear Regression
 
 ``` {r Part 2.0, echo = T, results = T}
 summary(diamonds_subset$x)
@@ -177,7 +181,7 @@ may also take into account other variables that can affect the price like how we
 respective diamonds. In the rest of the diagnostic plots the observations are for the most part right alone the lines
 of the model. One important thing to not from these plots is the emergence of two outliers. There is one label 130 that
 can be seen pretty apparently and another unlabeled open that show up in all 4 plots. While there are only two of these
-outliers they are still important to note and show that even within a sample size of 500 observatiosn the presence of 
+outliers they are still important to note and show that even within a sample size of 500 observations the presence of 
 outliers is there. 
 
 ```{r Part 2.1, echo = T, results = T, fig.width=6, fig.height=4}
@@ -193,12 +197,27 @@ summary(fit2_logy)
 plot(fit2_logy)
 ```
 
-For the second model I decided to test I wanted to look into transforming the linear model in order to see how much 
-better the predictions would be or if it wouldn't matter in this case. 
+For the second model I decided to test, I wanted to look into transforming the linear model in order to see how much 
+better the predictions would be or if it wouldn't matter in this case. In this model, I decided to transform the y
+variable as I saw it looked more interesting than transforming the x variable. For this I'm looking into the relation
+between the price and how it is affected by the size of the table in relation to the diamond. First comparing the
+summary statistics, just looking at the residuals you can see the difference in the two different models. In the
+transformed model you can see how the median is just around 0 and the min and max values are just around -2 and 2, 
+compared to the first model where the median was -1614 and the min and max were -4673 and 14772. The transformed model 
+creates a median that is actually in the middle of the min and max and brings those small and large values closer
+together. When it came to the coefficients, the first model didn't show any significance between the two tested 
+variables, however in the transformed model, we can now see how the intercept has a significance code of *** and the 
+table has a code of **. This is a huge change compared to what was seen in the first model where there was no
+significance at all. When it came to residual error, it went from 4335 to 1.041, which is another huge step in showing
+there could be a significant relationship between the variables. The R-squared value shows that the first model went
+from having less than a 1% variability of price due to the table and now with the transformed model that has gone up to
+1.5%. Although this isn't a lot the transformation has increased the way these variables interact with each other. 
 
+Looking at both of the models' graphs the change is there but not that significant. The biggest change can be seen in 
+the standardized residuals plot where compared to the first model and the transformed model there is noticable change
+in how the plotted points hug the dotted line at the top of the line where it tapered off from it in the first model. 
 
-
-
+### Finding The Confidence Interval
 
 
 
