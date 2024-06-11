@@ -168,8 +168,45 @@ plot(SLR3)
 summary(SLR3)
 ```
 
+Write the observations here.
 
+``` {r Part 2.2, echo = F, results = F}
+# R-Squared 0.8463
+# test_model_1 <- lm(log(price) ~ table + x, data = diamonds_sample)
+# summary(test_model_1)
+
+# Not as much significance as test_model_1, R-Square 0.8462
+# test_model_2 <- lm(log(price) ~ table + y, data = diamonds_sample)
+# summary(test_model_2)
+
+# Not as much significance as test_model_1 and test_model_2, R-Squared 0.7883
+# test_model_3 <- lm(log(price) ~ table + z, data = diamonds_sample)
+# summary(test_model_3)
+
+# Best model with 3 variables at R_Squared of 0.8696
+# test_model_4 <- lm(log(price) ~ table + x + clarity, data = diamonds_sample)
+# summary(test_model_4)
+
+# Didn't make cut 
+# test_model_5 <- lm(log(price) ~ table + x + carat, data = diamonds_sample)
+# summary(test_model_5)
+
+# Didn't make cut 
+# test_model_6 <- lm(log(price) ~ table + x + depth, data = diamonds_sample)
+# summary(test_model_6)
+
+# Had a R-Squared value of 0.8697, but included another variable
+# test_model_7 <- lm(log(price) ~ table + x + cut + clarity, data = diamonds_sample)
+# summary(test_model_7)
+
+# Using anova decied to go with test_model_4
+# anova(test_model_1, test_model_4, test_model_7, test='F')
+```
+
+Write the conclusions here.
+
+Comment on Part 2 interesting points. 
 
 ```{r Part 3, echo = T, results = T}
-anova(fit0)
+
 ```
