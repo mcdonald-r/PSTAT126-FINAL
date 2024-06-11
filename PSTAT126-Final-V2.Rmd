@@ -115,18 +115,60 @@ depth or table, so it makes sense that these values don't really have a big affe
 SLR <- lm(price ~ table, data = diamonds_sample)
 par(mfrow=c(2,2))
 plot(SLR)
+
 summary(SLR)
 
-SLR1 <- lm(log(price) ~ table, data = diamonds_sample)
-par(mfrow=c(2,2))
-plot(SLR1)
-summary(SLR1)
+confint(SLR)
 
-SLR2 <- lm(price ~ log(table), data = diamonds_sample)
+par(mfrow=c(1,1))
+plot(diamonds_sample$table, diamonds_sample$price, 
+     main = "Price vs Table Percentage",
+     xlab = "Table Percentage", ylab = "Price")
+
+abline(SLR, col = "red", lwd = 2)
+```
+
+From the plot of this simple linear model between the price and the table we can start by looking at the Residuals vs. Fitted
+and see that there really isn't a pattern that emerges here. The points have a lot of fluctuation and many are very far away
+from zero showing that the prediction values aren't very significant. 
+
+When it comes to the Q-Q Residuals, the start of the graph doesn't look all too bad. The points form around that straight 
+line from the beginning, but a little halfway through that line the points take a steep upturn and don't return back to the 
+straight line visually showing that the residuals aren't normally distributed as the quantiles increase. 
+
+The Scale Location graph goes along with the trend of proving that our two variables aren't significant to each other. This
+part of the plot doesn't show the points forming a funnel shape that would suggest constant variance among the residuals,
+instead the points are scattered everywhere.
+
+Lastly in the Residuals vs. Leverage, we see a decent amount of outliers that have a high leverage although they don't have 
+high residuals, as the residuals go up the leverage trends to go down for these outliers. Still these outliers show that
+there can be an effect on our model because of them. 
+
+Now looking at the summary statistics, the table is coming to the same conclusion. We see that the p-values are very high
+and doesn't push is towards the idea of a significant affect. Moving onto the R-Squared value, we see that it is at an
+extremely low value of 0.006786, or that table accounts for 0.68% of the variance of the price. 
+
+Moving onto the confidence interval, we can see how the intercept and table both include 0 within the interval, proving that 
+the parameters aren't significant. The large range at which the values can be from also show the little significance if any
+that the parameters have on each other.
+
+Lastly, the graph of the price vs table with the plotted regression line is a clear visual that they have little to no 
+relationship. The graph shows how the points do not end up along the line at all and many are scattered around from outliers 
+as there isn't a clear pattern in their grouping. 
+
+```{r Part 2.1, echo = T, results = T}
+SLR2 <- lm(log(price) ~ table, data = diamonds_sample)
 par(mfrow=c(2,2))
 plot(SLR2)
 summary(SLR2)
+
+SLR3 <- lm(price ~ log(table), data = diamonds_sample)
+par(mfrow=c(2,2))
+plot(SLR3)
+summary(SLR3)
 ```
+
+
 
 ```{r Part 3, echo = T, results = T}
 anova(fit0)
