@@ -1,0 +1,133 @@
+---
+title: "PSTAT126-Final-V2"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+date: "2024-06-07"
+---
+
+## PART - 1 Data Description and Descriptive Statistics
+
+```{r Part 1.0, echo = T, results = T}
+Diamond_dataset <- read.csv("/users/robeh/desktop/DiamondsPrices2022.csv")
+attach(Diamond_dataset)
+head(Diamond_dataset)
+
+library(dplyr)
+set.seed(1)
+diamonds_sample <- sample_n(Diamond_dataset, 500)
+
+library(skimr)
+# Have to use this instead of skim, because I get error trying to load the histogram 
+# due to a latex error
+skim_without_charts(diamonds_sample)
+```
+
+### Description of Variables and Observational Unit 
+
+Main Variables Being Testing:
+
+The **Color** variable is a color grading scale that ranges from D to H (in the data set) and rates the colorless or
+near colorless of a white diamond. Diamonds in the ranges of D to F are the best that contain no other color and are
+of the highest quality. Diamonds in the ranges of G to J are still high quality but contain slight traces of color.
+
+The **Clarity** variable rates the presence of internal or external blemishes, known as inclusions within the
+diamond. In the data set the ratings go from VVS2, VS1, VS2, SI1, SI2. VVS2 means that inclusions are very difficult
+to see under 10x magnification. VS means that inclusions are difficult to see under 10x magnification. VS2 means
+that inclusions are somewhat easier to see under 10x magnification, but still minor. SI1 means that inclusions are
+noticeable under 10x magnification. SI2 means that inclusions are more easily noticeable under 10x magnification.
+
+The **Price** variable determines the monetary value of a diamond. There are a lot of factors that go into
+determining the value of a diamond like cut, clarity, color, shape, and many more. 
+
+The **Table** of a diamond refers to the large flat face when looking down at the top of the diamond. In the data
+set the variable is a percentage of how big the table is compared to the total diameter of the diamond.
+
+The **Depth** of a diamond is the distance from the large flat surface of the top of the diamond, known as the
+table, to the bottom of the diamond, known as the culet. In the data set the variable is a percentage of how deep a
+diamond in relation to its width. 
+
+The **Observational Unit** of the data set is a single diamond out of the total 54,000 diamonds that make up the data
+set. Each contain the variables stated before as well as 6 other variables that are outside the scope of this
+project.
+
+Other Variables in The Data Set:
+
+The **Carat** refers to the weight unit that measures gemstones, in this case it is measuring diamonds. One carat is 
+equal to 200 milligrams.
+
+The **Cut** variable is a categorical variable is a rating that is an important piece of the puzzle that determines how
+good the diamond is overall. It goes into how the diamond looks visually as well as how well the diamond is crafted.
+
+The **X**, **Y**, and **Z** variable just refers to the dimensions of the diamond. The **x** is the length in mm, the 
+**y** is the width in mm, and the **z** is the depth in mm. 
+
+```{r Part 1.2, echo = T, results = T}
+fit0 <- lm(price ~ table + clarity, data = diamonds_sample)
+summary(fit0)
+```
+
+From the results we can see the the variables clarity and table don't have a significant effect on the price variable.
+When looking at the R-Squared value, we see that they only account for 6.14% of the variance in price. 
+
+```{r Part 1.3, echo = T, results = T}
+table(diamonds_sample$color)
+
+diamonds_sample$D = ifelse(diamonds_sample$color == "D", 1, 0)
+diamonds_sample$E = ifelse(diamonds_sample$color == "E", 1, 0)
+diamonds_sample$F = ifelse(diamonds_sample$color == "F", 1, 0)
+diamonds_sample$G = ifelse(diamonds_sample$color == "G", 1, 0)
+diamonds_sample$H = ifelse(diamonds_sample$color == "H", 1, 0)
+diamonds_sample$I = ifelse(diamonds_sample$color == "I", 1, 0)
+diamonds_sample$J = ifelse(diamonds_sample$color == "J", 1, 0)
+attach(diamonds_sample)
+
+fit2 <- lm(price ~ depth + E + F + G + H + I + J, data = diamonds_sample)
+summary(fit2)
+```
+
+Now looking at depth and color (using dummy variables) we can see how alike the last test they have a very small 
+significance on price. Back to the R-Squared value it shows that they only account for 7.47% of the variance in 
+the price variable.
+
+```{r Part1.4, echo = T, results = T}
+fit3 <- lm(price ~ color + clarity + depth + table, data = diamonds_sample)
+summary(fit3)
+```
+
+Constructing a model with all the variables that I randomly chose, it is apparent that the ones I chose don't have that
+big of an impact when it comes to the effect of the price. In the last summary, it does show a lot of significance stars
+but in the end the R-Squared value only comes out to 0.1434, something I'll have to work on from here on out on this 
+project. 
+
+### Comments on Part 1
+
+I was surprised that the variables I choose to test showed that they didn't have that big an effect on the overall
+price of the diamond. The variables I chose had a very low R-Squared value which I wasn't really expected. However, 
+after looking at the data again I realized that the percentages of the depth and table don't can't really quantify the 
+diamond. They give a percentage of the proportion, but diamond that are way different in size could still have the same
+depth or table, so it makes sense that these values don't really have a big affect on the price. 
+
+## PART - 2 Simple Linear Regression
+
+```{r Part 2, echo = T, results = T}
+SLR <- lm(price ~ table, data = diamonds_sample)
+par(mfrow=c(2,2))
+plot(SLR)
+summary(SLR)
+
+SLR1 <- lm(log(price) ~ table, data = diamonds_sample)
+par(mfrow=c(2,2))
+plot(SLR1)
+summary(SLR1)
+
+SLR2 <- lm(price ~ log(table), data = diamonds_sample)
+par(mfrow=c(2,2))
+plot(SLR2)
+summary(SLR2)
+```
+
+```{r Part 3, echo = T, results = T}
+anova(fit0)
+```
