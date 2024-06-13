@@ -216,7 +216,8 @@ test_model_7 <- lm(log(price) ~ table + x + clarity + cut, data = diamonds_sampl
 After realizing that my best model would come from the transformation of the price variable, I experimented with around 
 7 different models to try and find the best one. After all of them I ended up with two models that I was pretty happy with.
 The models were extremely close to each other when it came to their R-Squared values with 1 being 0.8696 and the second one
-being 0.8697.
+being 0.8697. At this point I can say that the model has multicollinearity, because of how lowly it originally aligned with 
+the first two variables to now how it is a good model because of the additional variables added. 
 
 In this part I found it interesting that with the two models I ended up choosing that their R-Squared values were so
 incredibly close to each other. I also thought it was interesting that although the first model was just barely lower it had
@@ -226,16 +227,28 @@ little bit more to effect the model, but in this case it didn't.
 ## Part 3 - Goal
 
 ```{r Part 3, echo = T, results = T}
-anova(test_model_4, test_model_7, test="F")
+test_model_4 <- lm(log(price) ~ table + x + clarity, data = diamonds_sample)
+summary(test_model_4)
+
+test_model_7 <- lm(log(price) ~ table + x + clarity + cut, data = diamonds_sample)
+summary(test_model_7)
+```
+
+Analyze how it works and what you observe.
+
+```{r Part 3.1, echo = T, results = T}
 AIC(test_model_4)
 AIC(test_model_7)
+BIC(test_model_4)
+BIC(test_model_7)
 final_model <- lm(log(price) ~ table + x + clarity, data = diamonds_sample)
 summary(final_model)
 ```
 
 Document the observations of finding the best model
 
-```{r Part 3.1, echo = T, results = T}
+```{r Part 3.2, echo = T, results = T}
+# Give CIs for a mean predicted value and the PIs of a future predicted value for at least one combination of X’s
 
 ```
 
