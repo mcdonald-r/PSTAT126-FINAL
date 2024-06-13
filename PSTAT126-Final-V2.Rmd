@@ -168,7 +168,12 @@ plot(SLR3)
 summary(SLR3)
 ```
 
-Write the observations here.
+After testing the initial hypothesis it was apparent the the variables I was using didn't have much correlation between the
+two of them. To try and make the model better, I experimented with using the log function on the y and x variables of the 
+model. As you can see I started with the log on the y or the price and made a difference by getting the R-Squared value to 
+0.01504. Although this is extremely low, within the scope of this test I more than doubled the original R-Squared value. 
+After this, I tried to switch the log function onto the x variable, however it didn't have a R-Squared value nearly as good
+as my first transformation so I left the log on the price variable.
 
 ``` {r Part 2.2, echo = FALSE, results = 'hide'}
 # R-Squared 0.8463
@@ -184,7 +189,7 @@ Write the observations here.
 # summary(test_model_3)
 
 # Best model with 3 variables at R_Squared of 0.8696
-test_model_4 <- lm(log(price) ~ table + x + clarity, data = diamonds_sample)
+# test_model_4 <- lm(log(price) ~ table + x + clarity, data = diamonds_sample)
 # summary(test_model_4)
 
 # Didn't make cut 
@@ -196,13 +201,29 @@ test_model_4 <- lm(log(price) ~ table + x + clarity, data = diamonds_sample)
 # summary(test_model_6)
 
 # Had a R-Squared value of 0.8697, but included another variable
-test_model_7 <- lm(log(price) ~ table + x + clarity + cut, data = diamonds_sample)
+# test_model_7 <- lm(log(price) ~ table + x + clarity + cut, data = diamonds_sample)
 # summary(test_model_7)
 ```
 
-Write the conclusions here of all the different tests.
+```{r Part 2.3, echo = T}
+# The 1st model I was happy with 
+test_model_4 <- lm(log(price) ~ table + x + clarity, data = diamonds_sample)
 
-Comment on Part 2 interesting points. 
+# The 2nd model I was happy with 
+test_model_7 <- lm(log(price) ~ table + x + clarity + cut, data = diamonds_sample)
+```
+
+After realizing that my best model would come from the transformation of the price variable, I experimented with around 
+7 different models to try and find the best one. After all of them I ended up with two models that I was pretty happy with.
+The models were extremely close to each other when it came to their R-Squared values with 1 being 0.8696 and the second one
+being 0.8697.
+
+In this part I found it interesting that with the two models I ended up choosing that their R-Squared values were so
+incredibly close to each other. I also thought it was interesting that although the first model was just barely lower it had
+one less variable than my second one. I would have thought that by adding the cut varibale to the model it would have done a
+little bit more to effect the model, but in this case it didn't. 
+
+## Part 3 - Goal
 
 ```{r Part 3, echo = T, results = T}
 anova(test_model_4, test_model_7, test="F")
