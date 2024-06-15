@@ -216,7 +216,7 @@ test_model_7 <- lm(log(price) ~ table + x + clarity + cut, data = diamonds_sampl
 After realizing that my best model would come from the transformation of the price variable, I experimented with around 
 7 different models to try and find the best one. After all of them I ended up with two models that I was pretty happy with.
 The models were extremely close to each other when it came to their R-Squared values with 1 being 0.8696 and the second one
-being 0.8697. At this point I can say that the model has multicollinearity, because of how lowly it originally aligned with 
+being 0.8697. At this point I can say that the model has multicolinearity, because of how lowly it originally aligned with 
 the first two variables to now how it is a good model because of the additional variables added. 
 
 In this part I found it interesting that with the two models I ended up choosing that their R-Squared values were so
@@ -234,22 +234,49 @@ test_model_7 <- lm(log(price) ~ table + x + clarity + cut, data = diamonds_sampl
 summary(test_model_7)
 ```
 
-Analyze how it works and what you observe.
+Coming down to our last two models we can see that these are the same two that we ended up coming to a conclusion with at the
+end of part 2. As we can see the first model looking at price, is made up of the variables table, x, and clarity. Then moving
+onto the second model, it uses the variables table, x, clarity, and cut. While we add another variable to our second model, 
+we can see that the estimates of the coefficients don't differentiate too much and are still relatively close to each other
+when comparing the summarizes side by side. This shows how the models similarly and is a reason why the R-Squared values are
+so close to each other. I think its also interesting to note that while we did add the variable, cut, to the second model, 
+the summary doesn't show it to be significant as their P-values are too high and they don't have any signifigance stars next
+to them in the summary.
 
 ```{r Part 3.1, echo = T, results = T}
 AIC(test_model_4)
 AIC(test_model_7)
 BIC(test_model_4)
 BIC(test_model_7)
+
 final_model <- lm(log(price) ~ table + x + clarity, data = diamonds_sample)
-summary(final_model)
 ```
 
-Document the observations of finding the best model
+Here I used decided to use both, the AIC and BIC to see which model was better and was interested how different the results 
+would be or be close to the same thing. As we can see both of the tests came to the conclusion that the first model, 
+test_model_4, was the better model. In the AIC and BIC, we see that they display a lower value than that of the 2nd model, 
+indicating that it is a better model. 
 
 ```{r Part 3.2, echo = T, results = T}
-# Give CIs for a mean predicted value and the PIs of a future predicted value for at least one combination of X’s
+x_comb<- data.frame(table = 56, x = 6.1, clarity = "VVS2")
 
+ci_mean_log <- predict(final_model, x_comb, interval = "confidence")
+pi_future_log <- predict(final_model, x_comb, interval = "prediction")
+
+ci_mean_adj <- exp(ci_mean_log)
+pi_future_adj <- exp(pi_future_log)
+
+print(ci_mean_adj)
+print(pi_future_adj)
 ```
 
-Summarize the report.
+Finally finishing the report, we can see a test I did of the model using the x values I manually inputted into the model. A
+little note, I did have to adjust the intervals to account for the fact that I had to transform the price earlier in the 
+report. Going back to the test, I used a value of 56 for table, 6.1 for x, and the clarity was categorized as VVS2. With
+these value for the observation I got a confidence for the mean predicted value to be between $3559.24 and \$4491.13. Looking
+at the predicted interval for the future predicted value, I got the value to be between $1870.91 and \$ 8543.95. Looking at
+these ranges it is clear that there is a lot of work that could be done to the model in order to get a more refined interval
+for both the pi and ci. At the end of the day it had to do with me randomly picking variables at the start, if I had looked
+closer into each variable at the start of the experiment I could have created a more accurate model. However, being that the 
+varibales I chose to make a model with were at random I felt that there was at least some direction with the model and 
+transforming the price variable certainly played a big role. 
